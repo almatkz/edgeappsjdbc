@@ -71,20 +71,27 @@ public class ProductRepositoryImp implements ProductRepository {
 
         var keyHolder = new GeneratedKeyHolder();
 
-        jdbcTemplate.update(connection -> {
-            PreparedStatement stmt = connection.
-                    prepareStatement(sqlQuery,
-                            new String[] { "id" });
+//        jdbcTemplate.update(connection -> {
+//            PreparedStatement stmt = connection.
+//                    prepareStatement(sqlQuery,
+//                            new String[] { "id" });
+//
+//            stmt.setString(1, product.getName());
+//            stmt.setString(2, product.getDescription());
+//            stmt.setBigDecimal(3, product.getPrice());
+//
+//            return stmt;
+//
+//        }, keyHolder);
 
-            stmt.setString(1, product.getName());
-            stmt.setString(2, product.getDescription());
-            stmt.setBigDecimal(3, product.getPrice());
+        jdbcTemplate.update("insert into product_positions"
+                        + "(name, description, price) "
+                        + "values (?, ?, ?) ",
+                product.getName(),
+                product.getDescription(),
+                product.getPrice());
 
-            return stmt;
-
-        }, keyHolder);
-
-        return Objects.requireNonNull(keyHolder.getKey()).longValue();
+        return 3L;
     }
 
     @Override

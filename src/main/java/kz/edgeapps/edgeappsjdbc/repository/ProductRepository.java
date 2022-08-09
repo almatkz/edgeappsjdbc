@@ -3,7 +3,7 @@ package kz.edgeapps.edgeappsjdbc.repository;
 import kz.edgeapps.edgeappsjdbc.model.Product;
 
 import java.util.List;
-
+// TODO: приватность функций в интерфейсах лишняя, сам интел подсказывает
 public interface ProductRepository {
     public Product findOne(Long id);
 

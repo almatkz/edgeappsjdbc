@@ -10,6 +10,7 @@ public class ProductObjects {
     private Long id;
     private String name;
     private String description;
+    //TODO: зачем здесь BigDecimal?
     private BigDecimal price;
 
     public ProductObjects(Long id, String name, String description, BigDecimal price) {
