@@ -14,7 +14,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-import java.util.Objects;
 
 @Repository
 public class ProductRepositoryImp implements ProductRepository {
@@ -78,13 +77,13 @@ public class ProductRepositoryImp implements ProductRepository {
 
             stmt.setString(1, product.getName());
             stmt.setString(2, product.getDescription());
-            stmt.setBigDecimal(3, product.getPrice());
+            stmt.setInt(3, product.getPrice());
 
             return stmt;
 
         }, keyHolder);
 
-        return Objects.requireNonNull(keyHolder.getKey()).longValue();
+        return keyHolder.getKey().longValue();
     }
 
     @Override
@@ -109,11 +108,10 @@ public class ProductRepositoryImp implements ProductRepository {
 
     private Product mapRowToProduct(ResultSet resultSet, int rowNum)
             throws SQLException {
-
         var product = new Product(resultSet.getLong("id"),
                 resultSet.getString("name"),
                 resultSet.getString("description"),
-                resultSet.getBigDecimal("price"));
+                resultSet.getInt("price"));
 
         return product;
     }

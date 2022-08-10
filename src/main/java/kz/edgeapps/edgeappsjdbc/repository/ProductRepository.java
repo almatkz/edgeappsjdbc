@@ -5,16 +5,16 @@ import kz.edgeapps.edgeappsjdbc.model.Product;
 import java.util.List;
 
 public interface ProductRepository {
-    public Product findOne(Long id);
+    Product findOne(Long id);
 
-    public List<Product> findAll();
+    List<Product> findAll();
 
-    public void save(Product product);
+    void save(Product product);
 
-    public Long saveAndReturnId(Product product);
+    Long saveAndReturnId(Product product);
 
-    public void update(Product product);
+    void update(Product product);
 
-    public Boolean delete(Long id);
+    Boolean delete(Long id);
 
 }
