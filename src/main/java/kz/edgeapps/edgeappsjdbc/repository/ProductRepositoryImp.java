@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Repository;
 
 import java.sql.PreparedStatement;
@@ -56,7 +57,7 @@ public class ProductRepositoryImp implements ProductRepository {
     public void save(Product product) {
 
         var sqlQuery = Query.SAVE;
-
+        //TODO: отловить конкретные ошибки, чтоб пришла 400 ошибка и поля которые нужно заполнить
         jdbcTemplate.update(sqlQuery,
                 product.getName(),
                 product.getDescription(),
@@ -68,22 +69,29 @@ public class ProductRepositoryImp implements ProductRepository {
 
         var sqlQuery = Query.SAVE_AND_RETURN_ID;
 
-        var keyHolder = new GeneratedKeyHolder();
+//        var keyHolder = new GeneratedKeyHolder();
+//
+//        jdbcTemplate.update(connection -> {
+//            PreparedStatement stmt = connection.
+//                    prepareStatement(sqlQuery,
+//                            new String[] { "id" });
+//
+//            stmt.setString(1, product.getName());
+//            stmt.setString(2, product.getDescription());
+//            stmt.setInt(3, product.getPrice());
+//
+//            return stmt;
+//
+//        }, keyHolder);
+//
+//        return keyHolder.getKey().longValue();
 
-        jdbcTemplate.update(connection -> {
-            PreparedStatement stmt = connection.
-                    prepareStatement(sqlQuery,
-                            new String[] { "id" });
-
-            stmt.setString(1, product.getName());
-            stmt.setString(2, product.getDescription());
-            stmt.setInt(3, product.getPrice());
-
-            return stmt;
-
-        }, keyHolder);
-
-        return keyHolder.getKey().longValue();
+        SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sqlQuery,
+                product.getName(),
+                product.getDescription(),
+                product.getPrice());
+        rowSet.next();
+        return rowSet.getLong("id");
     }
 
     @Override

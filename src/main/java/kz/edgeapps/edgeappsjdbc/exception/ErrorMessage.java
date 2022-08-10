@@ -9,7 +9,7 @@ public class ErrorMessage {
     Date timestamp;
     String message;
     String description;
-
+    //TODO: здесь косяк
     public ErrorMessage(Integer i, Date date, String message, String internal_server_error) {
     }
 }

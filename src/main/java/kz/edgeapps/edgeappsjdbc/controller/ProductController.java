@@ -26,17 +26,18 @@ public class ProductController {
     @Autowired
     ProductRepository productRepository;
 
-    //Create product
+    //добавить отдельные пути для каждого реста
     @PostMapping
     public ResponseEntity<String> save(@RequestBody Product product) {
 
         try {
+            //TODO: пересмотреть нужду в варках
             var productId = productRepository.saveAndReturnId(product);
 
             return new ResponseEntity<String>
                     ("Product successfully created , Id ="
                             + productId, HttpStatus.CREATED);
-
+            //не ловить Exception слишком обширный эксепшн
         } catch (Exception e) {
             throw new InternalServerError(e.getMessage());
         }

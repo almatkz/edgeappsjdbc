@@ -17,7 +17,7 @@ public class Query {
     public static final String SAVE_AND_RETURN_ID =
             "insert into product_positions"
                     + "(name, description, price) "
-                    + "values (?, ?, ?)";
+                    + "values (?, ?, ?) returning id";
     public static final String UPDATE =
             "update product_positions set "
                     + "name = ?, description = ?,"
