@@ -14,7 +14,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-import java.util.Objects;
 
 @Repository
 public class ProductRepositoryImp implements ProductRepository {
@@ -71,27 +70,20 @@ public class ProductRepositoryImp implements ProductRepository {
 
         var keyHolder = new GeneratedKeyHolder();
 
-//        jdbcTemplate.update(connection -> {
-//            PreparedStatement stmt = connection.
-//                    prepareStatement(sqlQuery,
-//                            new String[] { "id" });
-//
-//            stmt.setString(1, product.getName());
-//            stmt.setString(2, product.getDescription());
-//            stmt.setBigDecimal(3, product.getPrice());
-//
-//            return stmt;
-//
-//        }, keyHolder);
+        jdbcTemplate.update(connection -> {
+            PreparedStatement stmt = connection.
+                    prepareStatement(sqlQuery,
+                            new String[] { "id" });
 
-        jdbcTemplate.update("insert into product_positions"
-                        + "(name, description, price) "
-                        + "values (?, ?, ?) ",
-                product.getName(),
-                product.getDescription(),
-                product.getPrice());
+            stmt.setString(1, product.getName());
+            stmt.setString(2, product.getDescription());
+            stmt.setInt(3, product.getPrice());
 
-        return 3L;
+            return stmt;
+
+        }, keyHolder);
+
+        return keyHolder.getKey().longValue();
     }
 
     @Override
@@ -116,11 +108,10 @@ public class ProductRepositoryImp implements ProductRepository {
 
     private Product mapRowToProduct(ResultSet resultSet, int rowNum)
             throws SQLException {
-
         var product = new Product(resultSet.getLong("id"),
                 resultSet.getString("name"),
                 resultSet.getString("description"),
-                resultSet.getBigDecimal("price"));
+                resultSet.getInt("price"));
 
         return product;
     }
