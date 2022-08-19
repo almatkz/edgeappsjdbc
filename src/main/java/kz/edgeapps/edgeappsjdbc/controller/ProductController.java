@@ -1,6 +1,5 @@
 package kz.edgeapps.edgeappsjdbc.controller;
 
-import kz.edgeapps.edgeappsjdbc.repository.ProductRepositoryImp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -57,7 +56,7 @@ public class ProductController {
     //Get product by id
     @GetMapping("/{id}")
     public ResponseEntity<Product> getById
-    (@PathVariable("id") Long id) {
+    (@PathVariable("id") Integer id) {
 
         return new ResponseEntity<>
                 (productRepository.findOne(id), HttpStatus.OK);
@@ -67,7 +66,7 @@ public class ProductController {
     // Delete product
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteProduct
-    (@PathVariable("id") Long id) {
+    (@PathVariable("id") Integer id) {
 
         productRepository.delete(productRepository.findOne(id).getId());
 
@@ -79,13 +78,13 @@ public class ProductController {
     // Update product
     @PutMapping("/{id}")
     public ResponseEntity<String> updateProduct
-    (@PathVariable("id") Long id, @RequestBody Product product) {
+    (@PathVariable("id") Integer id, @RequestBody Product product) {
 
         var _product = productRepository.findOne(id);
-        var _upUSer = new Product(_product.getId(),
+        var _upProduct = new Product(_product.getId(),
                 product.getName(),product.getDescription(),product.getPrice());
 
-        productRepository.update(_upUSer);
+        productRepository.update(_upProduct);
         return new ResponseEntity<>
                 ("Updated successfully", HttpStatus.OK);
     }

@@ -3,9 +3,10 @@ package kz.edgeapps.edgeappsjdbc.repository;
 import kz.edgeapps.edgeappsjdbc.model.Product;
 
 import java.util.List;
+import java.util.UUID;
 
 public interface ProductRepository {
-    Product findOne(Long id);
+    Product findOne(Integer id);
 
     List<Product> findAll();
 
@@ -15,6 +16,6 @@ public interface ProductRepository {
 
     void update(Product product);
 
-    Boolean delete(Long id);
+    Boolean delete(Integer id);
 
 }

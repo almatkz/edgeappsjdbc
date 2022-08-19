@@ -13,19 +13,20 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.UUID;
 
 
 @Repository
-public class ProductRepositoryImp implements ProductRepository {
+public class ProductService implements ProductRepository {
     private final JdbcTemplate jdbcTemplate;
 
     @Autowired
-    public ProductRepositoryImp(JdbcTemplate jdbcTemplate) {
+    public ProductService(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
     @Override
-    public Product findOne(Long id) {
+    public Product findOne(Integer id) {
         var sqlQuery = Query.FIND_ONE;
 
         try {
@@ -99,7 +100,7 @@ public class ProductRepositoryImp implements ProductRepository {
     }
 
     @Override
-    public Boolean delete(Long id) {
+    public Boolean delete(Integer id) {
 
         var sqlQuery = Query.DELETE;
 
@@ -108,7 +109,7 @@ public class ProductRepositoryImp implements ProductRepository {
 
     private Product mapRowToProduct(ResultSet resultSet, int rowNum)
             throws SQLException {
-        var product = new Product(resultSet.getLong("id"),
+        var product = new Product(resultSet.getInt("id"),
                 resultSet.getString("name"),
                 resultSet.getString("description"),
                 resultSet.getInt("price"));
