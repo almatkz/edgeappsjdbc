@@ -10,6 +10,10 @@ public class ErrorMessage {
     String message;
     String description;
 
-    public ErrorMessage(Integer i, Date date, String message, String internal_server_error) {
+    public ErrorMessage(Integer statusCode, Date timestamp, String message, String description) {
+        this.statusCode = statusCode;
+        this.timestamp = timestamp;
+        this.message = message;
+        this.description = description;
     }
 }

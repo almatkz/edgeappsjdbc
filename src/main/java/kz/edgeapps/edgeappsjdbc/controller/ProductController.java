@@ -26,11 +26,11 @@ public class ProductController {
     ProductRepository productRepository;
 
     //Create product
-    @PostMapping
+    @PostMapping("/post_product")
     public ResponseEntity<String> save(@RequestBody Product product) {
 
         try {
-            var productId = productRepository.saveAndReturnId(product);
+            Long productId = productRepository.saveAndReturnId(product);
 
             return new ResponseEntity<String>
                     ("Product successfully created , Id ="
@@ -42,7 +42,7 @@ public class ProductController {
     }
 
     //Get all products
-    @GetMapping
+    @GetMapping("/get_product")
     public ResponseEntity<List<Product>> getAll() {
 
         try {
@@ -54,7 +54,7 @@ public class ProductController {
     }
 
     //Get product by id
-    @GetMapping("/{id}")
+    @GetMapping("/get_product/{id}")
     public ResponseEntity<Product> getById
     (@PathVariable("id") Integer id) {
 
@@ -64,7 +64,7 @@ public class ProductController {
     }
 
     // Delete product
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> deleteProduct
     (@PathVariable("id") Integer id) {
 
@@ -76,7 +76,7 @@ public class ProductController {
     }
 
     // Update product
-    @PutMapping("/{id}")
+    @PutMapping("put_product/{id}")
     public ResponseEntity<String> updateProduct
     (@PathVariable("id") Integer id, @RequestBody Product product) {
 
